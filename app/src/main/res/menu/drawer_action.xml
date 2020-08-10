@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/list_title"
+        android:id="@+id/list_nv"
+        android:icon="@drawable/ic_list" />
+    <item android:title="@string/statistics_title"
+        android:id="@+id/statistics_nv"
+        android:icon="@drawable/ic_statistics"
+        />
+</menu>
