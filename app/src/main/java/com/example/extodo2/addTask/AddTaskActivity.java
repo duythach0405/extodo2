@@ -37,7 +37,7 @@ public class AddTaskActivity extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);  //  dấu back
 
         String taskId = getIntent().getStringExtra(AddTaskFragment.ARGUMENT_EDIT_TASK_ID);
-        setToolbarTitle(taskId);
+//        setToolbarTitle(taskId);
 
         AddTaskFragment addstaskFragment = (AddTaskFragment) getSupportFragmentManager().findFragmentById(R.id.flContent);
 
@@ -46,7 +46,7 @@ public class AddTaskActivity extends AppCompatActivity {
             ActivityUtils.addFragmentActivity(getSupportFragmentManager(), addstaskFragment, R.id.flContent);
         }
 
-        // tạo presenter
+        // tạo presenter __________________________________
         mAddEditTaskPresenter = new AddTaskPresenter(addstaskFragment,
                 TaskRespository.getInstance(TaskLocalDataSource.getInstance(getApplicationContext())),taskId);
     }

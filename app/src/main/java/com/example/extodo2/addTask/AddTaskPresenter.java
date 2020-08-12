@@ -38,7 +38,7 @@ class AddTaskPresenter implements AddTaskContract.Presenter {
     @Override
     public void saveTask(String tittle, String description) {
         if (isNewTask()){
-            createTask(tittle, description);
+//            createTask(tittle, description);
         } else {
             updateTask(tittle, description);
         }
@@ -68,18 +68,18 @@ class AddTaskPresenter implements AddTaskContract.Presenter {
 
     }
 
-    private void createTask(String tittle, String description) {
-        Task newtask = new Task(tittle, description);
-
-        if (newtask.isEmpty()){
-            mAddTaskView.showEmptyTaskError();
-        }
-        else {
-            mTasksRepository.saveTask(newtask);
-            mAddTaskView.showTasksList();  // sau khi edit, quay lại tới List
-
-        }
-    }
+//    private void createTask(String tittle, String description) {
+//        Task newtask = new Task(tittle, description);
+//
+//        if (newtask.isEmpty()){
+//            mAddTaskView.showEmptyTaskError();
+//        }
+//        else {
+//            mTasksRepository.saveTask(newtask);
+//            mAddTaskView.showTasksList();  // sau khi edit, quay lại tới List
+//
+//        }
+//    }
 
     private boolean isNewTask() {
         return mTaskId == null;
