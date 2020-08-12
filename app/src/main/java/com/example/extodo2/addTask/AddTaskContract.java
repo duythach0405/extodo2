@@ -16,6 +16,7 @@ public interface AddTaskContract {
         void setTitle(String title);
 
         void setDesc(String desc);
+
     }
 
     interface Presenter extends BasePresenter {
@@ -23,5 +24,7 @@ public interface AddTaskContract {
         void saveTask(String tittle, String description);
 
         void populateTask();
+
+
     }
 }

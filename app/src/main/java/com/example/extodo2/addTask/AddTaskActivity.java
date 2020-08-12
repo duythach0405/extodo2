@@ -58,4 +58,10 @@ public class AddTaskActivity extends AppCompatActivity {
         else
             actionBar.setTitle(R.string.edit_task);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
 }

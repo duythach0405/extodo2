@@ -13,7 +13,7 @@ public class TaskRespository implements TaskDataSource {
     private final TaskDataSource mTasksLocalDataSource;
 
     public TaskRespository(TaskDataSource tasksLocalDataSource) {
-        this.mTasksLocalDataSource = tasksLocalDataSource;
+        mTasksLocalDataSource = tasksLocalDataSource;
     }
 
     public static TaskRespository getInstance(TaskDataSource tasksLocalDataSource) {
@@ -23,14 +23,15 @@ public class TaskRespository implements TaskDataSource {
         return INSTANCE;
     }
 
+    // this is on branch tung
     @Override
     public Flowable<List<Task>> getTasks() {
-
         return mTasksLocalDataSource.getTasks();
     }
 
     @Override
     public Flowable<Optional<Task>> getTask(String taskId) {
+        checkNotNull(taskId);
          return mTasksLocalDataSource
                 .getTask(taskId)
                 .firstElement().toFlowable();

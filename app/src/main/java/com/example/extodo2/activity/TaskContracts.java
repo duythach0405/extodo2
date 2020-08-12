@@ -10,8 +10,6 @@ public interface TaskContracts {
 
     interface View extends BaseView<Presenter> {
 
-        void setLoadingIndicator(boolean active);
-
         void showAddTask();
 
         void showSuccessfullySaveMessage();
@@ -31,6 +29,16 @@ public interface TaskContracts {
         void showCompletedFilterLabel();
 
         void showAllFilterLabel();
+
+       void showFilteringPopUpMenu();
+
+        void showCompletedTasksCleared();
+
+        void showTaskMarkedComplete();
+
+        void showTaskMarkedActive();
+
+        void showTaskDetailsUi(String taskId);
     }
 
     interface Presenter extends BasePresenter {
@@ -44,5 +52,13 @@ public interface TaskContracts {
         void setFiltering(TasksFilterType requestType);
 
         TasksFilterType getFiltering();
+
+        void clearCompletedTasks();
+
+        void completeTask( Task completedTask);
+
+        void activateTask( Task activeTask);
+
+        void openTaskDetails(Task requestedTask);
     }
 }

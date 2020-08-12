@@ -80,7 +80,6 @@ public class TasksPresenter implements TaskContracts.Presenter {
     // onNext
     private void handleReponse(List<Task> tasks) {
         processTasks(tasks);
-        mTaskView.setLoadingIndicator(false);
     }
 
     // onError
@@ -138,5 +137,31 @@ public class TasksPresenter implements TaskContracts.Presenter {
     @Override
     public TasksFilterType getFiltering() {
         return mCurrentFiltering;
+    }
+
+    @Override
+    public void clearCompletedTasks() {
+        mTaskRespository.clearCompletedTasks();
+        mTaskView.showCompletedTasksCleared();
+        loadTasks();
+    }
+
+    @Override
+    public void completeTask(Task completedTask) {
+        mTaskRespository.completeTask(completedTask);
+        mTaskView.showTaskMarkedComplete();
+        loadTasks();
+    }
+
+    @Override
+    public void activateTask(Task activeTask) {
+        mTaskRespository.activateTask(activeTask);
+        mTaskView.showTaskMarkedActive();
+        loadTasks();
+    }
+
+    @Override
+    public void openTaskDetails(Task requestedTask) {
+        mTaskView.showTaskDetailsUi(requestedTask.getmId());
     }
 }

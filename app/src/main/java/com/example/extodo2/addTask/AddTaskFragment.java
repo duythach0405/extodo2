@@ -32,6 +32,17 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
     public AddTaskFragment() {
         // Required empty public constructor
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.subscribe();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.unsubscribe();
+    }
 
     public static  AddTaskFragment newInstant(){
         return new AddTaskFragment();
@@ -60,11 +71,6 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
     }
 
     @Override
-    public void setPresenter(AddTaskContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     public void showEmptyTaskError() {
         Snackbar.make(edtTitle, getString(R.string.empty_task_message), Snackbar.LENGTH_LONG).show();
     }
@@ -83,5 +89,10 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
     @Override
     public void setDesc(String desc) {
         edtDescription.setText(desc);
+    }
+
+    @Override
+    public void setPresenter(AddTaskContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }

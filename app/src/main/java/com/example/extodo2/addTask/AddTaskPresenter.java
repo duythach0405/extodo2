@@ -27,12 +27,13 @@ class AddTaskPresenter implements AddTaskContract.Presenter {
 
     @Override
     public void unsubscribe() {
-
+        compositeDisposable.dispose();
     }
 
     @Override
     public void subscribe() {
-
+        if (!isNewTask()){
+            populateTask();}
     }
 
     @Override
@@ -46,26 +47,31 @@ class AddTaskPresenter implements AddTaskContract.Presenter {
 
     @Override
     public void populateTask() {
-
-    }
-
-    private void updateTask(String tittle, String description) {
         compositeDisposable.add(mTasksRepository.getTask(mTaskId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this:: handleReponse, this:: handleError));
     }
-
     private void handleReponse(Optional<Task> taskOptional) {
+
         Task task = taskOptional.get();
-
         mAddTaskView.setTitle(task.getmTitle());
-
         mAddTaskView.setDesc(task.getmDescription());
+
     }
 
     private void handleError(Throwable throwable) {
 
+    }
+    private void updateTask(String tittle, String description) {
+        if (isNewTask()) {
+            throw new RuntimeException("updateTask() was called but task is new.");
+        }
+
+        mTasksRepository.saveTask(new Task(tittle, description, mTaskId));
+
+        // After an edit, go back to the list.
+        mAddTaskView.showTasksList();
     }
 
     private void createTask(String tittle, String description) {

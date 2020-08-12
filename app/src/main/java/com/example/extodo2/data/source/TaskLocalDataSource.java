@@ -67,7 +67,7 @@ public class TaskLocalDataSource implements TaskDataSource {
                 TasksPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION,
                 TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED};
 
-        String sql = String.format("SELECT %s FROM %s", TextUtils.join("",p),
+        String sql = String.format("SELECT %s FROM %s", TextUtils.join(",",p),
                 TasksPersistenceContract.TaskEntry.TABLE_NAME);
 
         return mDatabaseHelper.createQuery(TasksPersistenceContract.TaskEntry.TABLE_NAME,sql)
@@ -83,14 +83,13 @@ public class TaskLocalDataSource implements TaskDataSource {
                 TasksPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION,
                 TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED};
 
-        String sql = String.format("SELECT %s FROM %s WHERE %s LIKE %s", TextUtils.join("",p),
-                TasksPersistenceContract.TaskEntry.TABLE_NAME,taskId);
+        String sql = String.format("SELECT %s FROM %s WHERE %s LIKE ?", TextUtils.join(",",p),
+                TasksPersistenceContract.TaskEntry.TABLE_NAME, TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID);
 
         return mDatabaseHelper.createQuery(TasksPersistenceContract.TaskEntry.TABLE_NAME, sql, taskId)
                 .mapToOneOrDefault(cursor -> Optional.of(mTaskMapperFunction.apply(cursor)), Optional.<Task>absent())
                 .toFlowable(BackpressureStrategy.BUFFER);
     }
-
 
     @Override
     public void saveTask(Task task) {
@@ -115,7 +114,7 @@ public class TaskLocalDataSource implements TaskDataSource {
 
         values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED, true);
 
-        String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + "LIKE ? ";
+        String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ? ";
 
         String[] selectionArgs = {taskId};
 
@@ -142,7 +141,7 @@ public class TaskLocalDataSource implements TaskDataSource {
 
     @Override
     public void clearCompletedTasks() {
-        String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED + "LIKE ?";
+        String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED + " LIKE ?";
 
         String[] selectionArgs = {"1"};
 
@@ -156,7 +155,7 @@ public class TaskLocalDataSource implements TaskDataSource {
 
     @Override
     public void deleteTask(String taskId) {
-        String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED + "LIKE ?";
+        String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ? ";
         String[] selectionArgs = {taskId};
         mDatabaseHelper.delete(TasksPersistenceContract.TaskEntry.TABLE_NAME, selection, selectionArgs);
     }

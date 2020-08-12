@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // add fragment vào activity
-        TaskFragment taskFragment = (TaskFragment) getSupportFragmentManager().findFragmentById(R.id.flcontent);
+        TaskFragment taskFragment = (TaskFragment) getSupportFragmentManager().findFragmentById(R.id.flContent);
         if (taskFragment== null){
             taskFragment = TaskFragment.newInstance();
-            ActivityUtils.addFragmentActivity(getSupportFragmentManager(),taskFragment,R.id.flcontent);
+            ActivityUtils.addFragmentActivity(getSupportFragmentManager(),taskFragment,R.id.flContent);
         }
 
         // khởi tạo instance presenter
